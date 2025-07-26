@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using System.Diagnostics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using LiteNetLib;
@@ -26,7 +24,13 @@ namespace ShootySpace
 
         #region Textures
 
-        Texture2D stars1;
+
+
+        #endregion
+
+        #region Game Objects
+
+        Backdrop soloBackdrop;
 
         #endregion
 
@@ -59,7 +63,7 @@ namespace ShootySpace
 
         protected override void LoadContent()
         {
-            stars1 = Content.Load<Texture2D>($"SpaceTiles/SS_Stars1");
+            soloBackdrop = new Backdrop(16, 9, Content.Load<Texture2D>($"SpaceTiles/SS_Stars1"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars2"));
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
@@ -102,7 +106,7 @@ namespace ShootySpace
 
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: windowScaler);
 
-
+            soloBackdrop.Draw(_spriteBatch);
 
             _spriteBatch.End();
 
