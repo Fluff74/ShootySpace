@@ -33,7 +33,7 @@ namespace ShootySpace
             {
                 for(int j = 0; j < height; j++)
                 {
-                    tiles[i, j] = rng.Next(0, 2);
+                    tiles[i, j] = rng.Next(0, 5);
                 }
             }
         }

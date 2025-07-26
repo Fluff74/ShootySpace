@@ -30,7 +30,7 @@ namespace ShootySpace
 
         #region Game Objects
 
-        Backdrop soloBackdrop;
+        Backdrop soloBackdrop; // This is the backdrop of the game while in single player, and also the backdrop of the main menu screen.
 
         #endregion
 
@@ -63,7 +63,7 @@ namespace ShootySpace
 
         protected override void LoadContent()
         {
-            soloBackdrop = new Backdrop(16, 9, Content.Load<Texture2D>($"SpaceTiles/SS_Stars1"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars2"));
+            soloBackdrop = new Backdrop(16, 9, Content.Load<Texture2D>($"SpaceTiles/SS_Stars1"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars2"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars3"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars4"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars5"));
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
