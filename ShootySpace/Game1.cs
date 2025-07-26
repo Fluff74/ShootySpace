@@ -63,7 +63,7 @@ namespace ShootySpace
 
         protected override void LoadContent()
         {
-            soloBackdrop = new Backdrop(16, 9, Content.Load<Texture2D>($"SpaceTiles/SS_Stars1"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars2"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars3"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars4"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars5"));
+            soloBackdrop = new Backdrop(16, 9, Content.Load<Texture2D>($"SpaceTiles/SS_Stars1"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars2"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars3"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars4"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars5"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars6"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars7"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars8"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars9"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars10"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars11"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars12"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars13"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars14"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars15"));
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
