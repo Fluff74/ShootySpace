@@ -7,6 +7,11 @@ using System.Runtime.CompilerServices;
 
 namespace ShootySpace
 {
+    // Joshua Smith
+    // 07/26/2025
+    //
+    // I decided I was going to make a game called Shooty Space for my portfolio, but also to play with friends. This project tackles quite a few things
+    // I'm not super comfortable implementing, but I think I can figure it out. The biggest thing is multiplayer...
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
