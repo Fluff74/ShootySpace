@@ -27,6 +27,7 @@ namespace ShootySpace
         {
             this.texture = texture;
             this.hitbox = hitbox;
+            this.hoverColor = hoverColor;
         }
 
         /// <summary>
@@ -35,9 +36,9 @@ namespace ShootySpace
         /// <param name="ms"> The current state of the user's mouse. </param>
         /// <param name="pms"> The previous state of the user's mouse. </param>
         /// <returns> Whether or not the user clicked the button. </returns>
-        public bool Update(MouseState ms, MouseState pms)
+        public bool Update(MouseState ms, MouseState pms, Point test)
         {
-            hover = hitbox.Contains(ms.Position);
+            hover = hitbox.Contains(test);
             return hover && ms.LeftButton == ButtonState.Pressed && pms.LeftButton == ButtonState.Released;
         }
 

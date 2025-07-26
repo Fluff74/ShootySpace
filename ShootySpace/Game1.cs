@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Input;
 using LiteNetLib;
 using LiteNetLib.Utils;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System;
 
 namespace ShootySpace
 {
@@ -21,15 +23,18 @@ namespace ShootySpace
 
         KeyboardState kb; // Current state of keyboard.
         KeyboardState pkb; // Previous state of keyboard.
-        float xScale;
-        float yScale;
-        Matrix windowScaler;
+        MouseState ms; // Current state of mouse.
+        MouseState pms; // Previous state of mouse.
+        Point mScale; // Scales the mouse based on the resolution to allow users with smaller resolutions to play the game.
+        float xScale; // The X scale of the screen for resizing. (1920)
+        float yScale; // The Y scale of the screen for resizing. (1080)
+        Matrix windowScaler; // The matrix used to resize the screen.
 
         #endregion
 
         #region Textures
 
-
+        Texture2D tempAsset;
 
         #endregion
 
@@ -39,11 +44,20 @@ namespace ShootySpace
 
         #endregion
 
+        #region User Interface
+
+        Button solo;
+        Button versus;
+        Button settings;
+        Button quit;
+
+        #endregion
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = false;
+            IsMouseVisible = true;
 
             #region Window Settings
 
@@ -69,6 +83,13 @@ namespace ShootySpace
         protected override void LoadContent()
         {
             soloBackdrop = new Backdrop(16, 9, Content.Load<Texture2D>($"SpaceTiles/SS_Stars1"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars2"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars3"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars4"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars5"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars6"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars7"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars8"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars9"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars10"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars11"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars12"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars13"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars14"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars15"));
+            tempAsset = Content.Load<Texture2D>($"tempAsset");
+
+            #region User Interface
+
+            solo = new Button(Content.Load<Texture2D>($"MainMenuButtons/SoloButton"), new Rectangle(1000, 800, 360, 120), Color.Yellow);
+
+            #endregion
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
@@ -76,6 +97,8 @@ namespace ShootySpace
         protected override void Update(GameTime gameTime)
         {
             kb = Keyboard.GetState(); // Check current state of keyboard.
+            ms = Mouse.GetState(); // Check current state of mouse.
+            mScale = new Point((int)(ms.X * (1920.0 / _graphics.PreferredBackBufferWidth)), (int)(ms.Y * (1080.0 / _graphics.PreferredBackBufferHeight))); // Scale the mouse position based on the resolution.
 
             #region State Independent Controls
 
@@ -99,9 +122,10 @@ namespace ShootySpace
 
             #endregion
 
-
+            solo.Update(ms, pms, mScale);
 
             pkb = kb; // Update previous keyboard state.
+            pms = ms; // Update previous mouse state.
             base.Update(gameTime);
         }
 
@@ -112,6 +136,7 @@ namespace ShootySpace
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: windowScaler);
 
             soloBackdrop.Draw(_spriteBatch);
+            solo.Draw(_spriteBatch);
 
             _spriteBatch.End();
 
