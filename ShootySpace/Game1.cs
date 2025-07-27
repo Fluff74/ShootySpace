@@ -99,7 +99,7 @@ namespace ShootySpace
             solo = new Button(Content.Load<Texture2D>($"MainMenuButtons/SoloButton"), new Rectangle(1490, 450, 360, 120), Color.Lime);
             versus = new Button(Content.Load<Texture2D>($"MainMenuButtons/SoloButton"), new Rectangle(1490, 600, 360, 120), Color.Orange);
             settings = new Button(Content.Load<Texture2D>($"MainMenuButtons/SettingsButton"), new Rectangle(1490, 750, 360, 120), Color.Blue);
-            quit = new Button(Content.Load<Texture2D>($"MainMenuButtons/SoloButton"), new Rectangle(1490, 900, 360, 120), Color.Red);
+            quit = new Button(Content.Load<Texture2D>($"MainMenuButtons/QuitButton"), new Rectangle(1490, 900, 360, 120), Color.Red);
 
             #endregion
 
