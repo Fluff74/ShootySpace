@@ -30,6 +30,15 @@ namespace ShootySpace
         float yScale; // The Y scale of the screen for resizing. (1080)
         Matrix windowScaler; // The matrix used to resize the screen.
 
+        /// <summary>
+        /// The possible states the game can be in.
+        /// </summary>
+        enum GameState
+        {
+            MainMenu
+        }
+        GameState gameState; // The current state of the game.
+
         #endregion
 
         #region Textures
@@ -87,7 +96,10 @@ namespace ShootySpace
 
             #region User Interface
 
-            solo = new Button(Content.Load<Texture2D>($"MainMenuButtons/SoloButton"), new Rectangle(1000, 800, 360, 120), Color.Yellow);
+            solo = new Button(Content.Load<Texture2D>($"MainMenuButtons/SoloButton"), new Rectangle(1490, 450, 360, 120), Color.Lime);
+            versus = new Button(Content.Load<Texture2D>($"MainMenuButtons/SoloButton"), new Rectangle(1490, 600, 360, 120), Color.Orange);
+            settings = new Button(Content.Load<Texture2D>($"MainMenuButtons/SettingsButton"), new Rectangle(1490, 750, 360, 120), Color.Blue);
+            quit = new Button(Content.Load<Texture2D>($"MainMenuButtons/SoloButton"), new Rectangle(1490, 900, 360, 120), Color.Red);
 
             #endregion
 
@@ -122,7 +134,22 @@ namespace ShootySpace
 
             #endregion
 
-            solo.Update(ms, pms, mScale);
+            switch (gameState)
+            {
+                case GameState.MainMenu:
+
+                    solo.Update(ms, pms, mScale);
+                    versus.Update(ms, pms, mScale);
+                    settings.Update(ms, pms, mScale);
+
+                    // Quit button functionality.
+                    if(quit.Update(ms, pms, mScale))
+                    {
+                        Exit();
+                    }
+
+                    break;
+            }
 
             pkb = kb; // Update previous keyboard state.
             pms = ms; // Update previous mouse state.
@@ -135,8 +162,21 @@ namespace ShootySpace
 
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: windowScaler);
 
-            soloBackdrop.Draw(_spriteBatch);
-            solo.Draw(_spriteBatch);
+            switch (gameState)
+            {
+                case GameState.MainMenu:
+
+                    // Draws the background to the screen.
+                    soloBackdrop.Draw(_spriteBatch);
+
+                    // Draws the user interface buttons to the screen.
+                    solo.Draw(_spriteBatch);
+                    versus.Draw(_spriteBatch);
+                    settings.Draw(_spriteBatch);
+                    quit.Draw(_spriteBatch);
+
+                    break;
+            }
 
             _spriteBatch.End();
 

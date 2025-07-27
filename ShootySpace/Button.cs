@@ -16,6 +16,7 @@ namespace ShootySpace
         Rectangle hitbox;
         Color hoverColor;
         bool hover;
+        bool holding;
 
         /// <summary>
         /// The constructor for a button object. Takes in the texture of the button, and it's hitbox.
@@ -39,7 +40,8 @@ namespace ShootySpace
         public bool Update(MouseState ms, MouseState pms, Point test)
         {
             hover = hitbox.Contains(test);
-            return hover && ms.LeftButton == ButtonState.Pressed && pms.LeftButton == ButtonState.Released;
+            holding = ms.LeftButton == ButtonState.Pressed;
+            return hover && !holding && pms.LeftButton == ButtonState.Pressed;
         }
 
         /// <summary>
@@ -48,9 +50,16 @@ namespace ShootySpace
         /// <param name="sb"> The SpriteBatch being used to draw the button. </param>
         public void Draw(SpriteBatch sb)
         {
-            if (hover)
+            if(hover)
             {
-                sb.Draw(texture, hitbox, hoverColor);
+                if(holding)
+                {
+                    sb.Draw(texture, hitbox, Color.DarkSlateGray);
+                }
+                else
+                {
+                    sb.Draw(texture, hitbox, hoverColor);
+                }
             }
             else
             {
