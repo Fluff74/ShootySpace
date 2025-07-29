@@ -82,6 +82,7 @@ namespace ShootySpace
 
         protected override void Initialize()
         {
+            // Calculates the values needed to scale the screen properly.
             xScale = (float)_graphics.PreferredBackBufferWidth / 1920;
             yScale = (float)_graphics.PreferredBackBufferHeight / 1080;
             windowScaler = Matrix.CreateScale(xScale, yScale, 1.0f);
@@ -97,7 +98,7 @@ namespace ShootySpace
             #region User Interface
 
             solo = new Button(Content.Load<Texture2D>($"MainMenuButtons/SoloButton"), new Rectangle(1490, 450, 360, 120), Color.Lime);
-            versus = new Button(Content.Load<Texture2D>($"MainMenuButtons/SoloButton"), new Rectangle(1490, 600, 360, 120), Color.Orange);
+            versus = new Button(Content.Load<Texture2D>($"MainMenuButtons/VersusButton"), new Rectangle(1490, 600, 360, 120), Color.Orange);
             settings = new Button(Content.Load<Texture2D>($"MainMenuButtons/SettingsButton"), new Rectangle(1490, 750, 360, 120), Color.Blue);
             quit = new Button(Content.Load<Texture2D>($"MainMenuButtons/QuitButton"), new Rectangle(1490, 900, 360, 120), Color.Red);
 
