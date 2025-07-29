@@ -44,12 +44,14 @@ namespace ShootySpace
         #region Textures
 
         Texture2D tempAsset;
+        Texture2D[] shipSpritesheets;
 
         #endregion
 
         #region Game Objects
 
         Backdrop soloBackdrop; // This is the backdrop of the game while in single player, and also the backdrop of the main menu screen.
+        Ship playerShip; // This ship represents the user. There will be more ship objects in Versus mode.
 
         #endregion
 
@@ -93,6 +95,9 @@ namespace ShootySpace
         protected override void LoadContent()
         {
             soloBackdrop = new Backdrop(16, 9, Content.Load<Texture2D>($"SpaceTiles/SS_Stars1"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars2"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars3"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars4"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars5"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars6"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars7"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars8"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars9"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars10"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars11"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars12"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars13"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars14"), Content.Load<Texture2D>($"SpaceTiles/SS_Stars15"));
+            shipSpritesheets = [ Content.Load<Texture2D>($"ShipSheets/DefaultShip") ];
+            playerShip = new Ship(shipSpritesheets, null, 0);
+
             tempAsset = Content.Load<Texture2D>($"tempAsset");
 
             #region User Interface
@@ -143,6 +148,8 @@ namespace ShootySpace
                     versus.Update(ms, pms, mScale);
                     settings.Update(ms, pms, mScale);
 
+                    playerShip.Update(kb, pkb, gameTime);
+
                     // Quit button functionality.
                     if(quit.Update(ms, pms, mScale))
                     {
@@ -169,6 +176,8 @@ namespace ShootySpace
 
                     // Draws the background to the screen.
                     soloBackdrop.Draw(_spriteBatch);
+
+                    playerShip.Draw(_spriteBatch);
 
                     // Draws the user interface buttons to the screen.
                     solo.Draw(_spriteBatch);
