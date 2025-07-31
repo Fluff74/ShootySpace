@@ -16,6 +16,7 @@ namespace ShootySpace
         private Texture2D explosionSheet; // The spritesheet for the explosion that happens when the player dies.
 
         private Rectangle drawLocation; // Where we're drawing the ship.
+        private Rectangle hitbox; // The rectangular hitbox of the ship, used to prevent from going offscreen or bumping with square obstacles.
         private Rectangle shipSource; // Which ship sprite from the sheet is being used currently.
         private Rectangle explosionSource; // Which explosion sprite from the sheet is being used currently.
 
@@ -44,6 +45,7 @@ namespace ShootySpace
             this.currentShip = currentShip;
 
             drawLocation = new Rectangle(960, 540, 90, 90);
+            hitbox = new Rectangle(915, 495, 90, 90);
             shipSource = new Rectangle(0, 0, 30, 30);
             origin = shipSource.Center.ToVector2();
 
@@ -132,6 +134,10 @@ namespace ShootySpace
             // Update our location accordingly.
             drawLocation.X += (int)velocity.X;
             drawLocation.Y += (int)velocity.Y;
+
+            // Update the hitboxes as well.
+            hitbox.X += (int)velocity.X;
+            hitbox.Y += (int)velocity.Y;
         }
 
         /// <summary>
@@ -143,6 +149,40 @@ namespace ShootySpace
             // 1.5708 is half of PI.
             facing.X = (float)(shipSource.Center.X + (25 * Math.Cos(rotation - 1.5708)));
             facing.Y = (float)(shipSource.Center.Y + (25 * Math.Sin(rotation - 1.5708)));
+        }
+
+        public void HandleRectangleCollisions(Rectangle other)
+        {
+            if (hitbox.Intersects(other))
+            {
+                Rectangle overlap = Rectangle.Intersect(hitbox, other);
+
+                if (overlap.Width <= overlap.Height)
+                {
+                    if (overlap.X > hitbox.X)
+                    {
+                        hitbox.X -= overlap.Width;
+                    }
+                    else
+                    {
+                        hitbox.X += overlap.Width;
+                    }
+                }
+                else
+                {
+                    if(overlap.Y > hitbox.Y)
+                    {
+                        hitbox.Y -= overlap.Height;
+                    }
+                    else
+                    {
+                        hitbox.Y += overlap.Height;
+                    }
+                }
+
+                drawLocation.X = hitbox.Center.X;
+                drawLocation.Y = hitbox.Center.Y;
+            }
         }
     }
 }

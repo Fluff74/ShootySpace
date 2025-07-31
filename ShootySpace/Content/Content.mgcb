@@ -13,6 +13,16 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Fonts/Jersey10-Regular.ttf
+/copy:Fonts/Jersey10-Regular.ttf
+
+#begin Fonts/MediumJersey10.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/MediumJersey10.spritefont
+
 #begin MainMenuButtons/QuitButton.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -48,10 +48,21 @@ namespace ShootySpace
 
         #endregion
 
+        #region Fonts
+
+        SpriteFont mediumJersey10;
+
+        #endregion
+
         #region Game Objects
 
         Backdrop soloBackdrop; // This is the backdrop of the game while in single player, and also the backdrop of the main menu screen.
         Ship playerShip; // This ship represents the user. There will be more ship objects in Versus mode.
+
+        Rectangle soloLeftBorder;
+        Rectangle soloTopBorder;
+        Rectangle soloBottomBorder;
+        Rectangle soloRightBorder;
 
         #endregion
 
@@ -75,6 +86,11 @@ namespace ShootySpace
             // Make the window borderless, and resize to match the player's computer.
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+
+            // Used to test rescales.
+            // _graphics.PreferredBackBufferWidth =1280;
+            // _graphics.PreferredBackBufferHeight = 720;
+
             _graphics.ApplyChanges();
 
             Window.IsBorderless = true;
@@ -89,6 +105,11 @@ namespace ShootySpace
             yScale = (float)_graphics.PreferredBackBufferHeight / 1080;
             windowScaler = Matrix.CreateScale(xScale, yScale, 1.0f);
 
+            soloLeftBorder = new Rectangle(-100, 0, 100, 1080);
+            soloTopBorder = new Rectangle(0, -100, 1920, 100);
+            soloBottomBorder = new Rectangle(0, 1080, 1920, 100);
+            soloRightBorder = new Rectangle(1920, 0, 100, 1080);
+
             base.Initialize();
         }
 
@@ -99,6 +120,12 @@ namespace ShootySpace
             playerShip = new Ship(shipSpritesheets, null, 0);
 
             tempAsset = Content.Load<Texture2D>($"tempAsset");
+
+            #region Fonts
+
+            mediumJersey10 = Content.Load<SpriteFont>($"Fonts/MediumJersey10");
+
+            #endregion
 
             #region User Interface
 
@@ -149,9 +176,13 @@ namespace ShootySpace
                     settings.Update(ms, pms, mScale);
 
                     playerShip.Update(kb, pkb, gameTime);
+                    playerShip.HandleRectangleCollisions(soloLeftBorder);
+                    playerShip.HandleRectangleCollisions(soloTopBorder);
+                    playerShip.HandleRectangleCollisions(soloBottomBorder);
+                    playerShip.HandleRectangleCollisions(soloRightBorder);
 
                     // Quit button functionality.
-                    if(quit.Update(ms, pms, mScale))
+                    if (quit.Update(ms, pms, mScale))
                     {
                         Exit();
                     }
