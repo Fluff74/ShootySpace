@@ -151,12 +151,19 @@ namespace ShootySpace
             facing.Y = (float)(shipSource.Center.Y + (25 * Math.Sin(rotation - 1.5708)));
         }
 
+        /// <summary>
+        /// Checks to see if the ship is colliding with a rectangular hitbox.
+        /// </summary>
+        /// <param name="other"> The rectangle we're checking against. </param>
         public void HandleRectangleCollisions(Rectangle other)
         {
+            // Are they intersecting?..
             if (hitbox.Intersects(other))
             {
+                // This is the rectangle that is within the overlapping segments of intersecting rectangles.
                 Rectangle overlap = Rectangle.Intersect(hitbox, other);
 
+                // Adjust hitbox as necessary.
                 if (overlap.Width <= overlap.Height)
                 {
                     if (overlap.X > hitbox.X)
@@ -180,6 +187,7 @@ namespace ShootySpace
                     }
                 }
 
+                // Update the draw location to match the new hitbox.
                 drawLocation.X = hitbox.Center.X;
                 drawLocation.Y = hitbox.Center.Y;
             }

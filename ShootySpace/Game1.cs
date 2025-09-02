@@ -35,7 +35,8 @@ namespace ShootySpace
         /// </summary>
         enum GameState
         {
-            MainMenu
+            MainMenu,
+            Solo
         }
         GameState gameState; // The current state of the game.
 
@@ -171,21 +172,37 @@ namespace ShootySpace
             {
                 case GameState.MainMenu:
 
-                    solo.Update(ms, pms, mScale);
                     versus.Update(ms, pms, mScale);
                     settings.Update(ms, pms, mScale);
 
-                    playerShip.Update(kb, pkb, gameTime);
-                    playerShip.HandleRectangleCollisions(soloLeftBorder);
-                    playerShip.HandleRectangleCollisions(soloTopBorder);
-                    playerShip.HandleRectangleCollisions(soloBottomBorder);
-                    playerShip.HandleRectangleCollisions(soloRightBorder);
+                    // Solo button functionality.
+                    if (solo.Update(ms, pms, mScale))
+                    {
+                        gameState = GameState.Solo;
+                    }
 
                     // Quit button functionality.
                     if (quit.Update(ms, pms, mScale))
                     {
                         Exit();
                     }
+
+                    break;
+
+                case GameState.Solo:
+
+                    // Controls.
+                    playerShip.Update(kb, pkb, gameTime);
+
+                    #region Collisions
+
+                    // Screen border collisions.
+                    playerShip.HandleRectangleCollisions(soloLeftBorder);
+                    playerShip.HandleRectangleCollisions(soloTopBorder);
+                    playerShip.HandleRectangleCollisions(soloBottomBorder);
+                    playerShip.HandleRectangleCollisions(soloRightBorder);
+
+                    #endregion
 
                     break;
             }
@@ -215,6 +232,15 @@ namespace ShootySpace
                     versus.Draw(_spriteBatch);
                     settings.Draw(_spriteBatch);
                     quit.Draw(_spriteBatch);
+
+                    break;
+
+                case GameState.Solo:
+
+                    // Draws the background to the screen.
+                    soloBackdrop.Draw(_spriteBatch);
+
+                    playerShip.Draw(_spriteBatch);
 
                     break;
             }
