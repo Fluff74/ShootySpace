@@ -225,6 +225,7 @@ namespace ShootySpace
                     // Draws the background to the screen.
                     soloBackdrop.Draw(_spriteBatch);
 
+                    // Draw the player's ship, used for testing.
                     playerShip.Draw(_spriteBatch);
 
                     // Draws the user interface buttons to the screen.
